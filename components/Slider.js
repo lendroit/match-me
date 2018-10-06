@@ -1,15 +1,28 @@
 import React, { Component } from "react";
 import {
+  Alert,
+  Dimensions,
+  ImageBackground,
   StyleSheet,
   Text,
-  View,
-  ImageBackground,
-  Dimensions
+  Linking,
+  View
 } from "react-native";
 
 import SwipeCards from "react-native-swipe-cards";
-
 import cards from "../conf/cards";
+
+facebookUrl = "https://www.facebook.com/sammy.tellier";
+
+const goOnFacebook = () => {
+  Linking.canOpenURL(facebookUrl).then(supported => {
+    if (supported) {
+      Linking.openURL(facebookUrl);
+    } else {
+      console.log("Don't know how to open URI: " + facebookUrl);
+    }
+  });
+};
 
 const fullWidth = Dimensions.get("window").width;
 
@@ -54,6 +67,13 @@ export default class extends React.Component {
 
   handleYup(card) {
     console.log(`Yup for ${card.text}`);
+    Alert.alert("It's a match !", "Contact Sammy on facebook", [
+      {
+        text: "Montre le moi ",
+        onPress: goOnFacebook
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]);
   }
   handleNope(card) {
     console.log(`Nope for ${card.text}`);
